@@ -15,11 +15,28 @@ const initialValues = {
   lastName: '',
   company: '',
 }
+const onSubmit = (val) => console.log(val)
+const validate = (val) => {
+  let errors = {}
+  if (!val.firstName) {
+    errors.firstName = 'Enter first name'
+  }
+  if (!val.lastName) {
+    errors.lastName = 'Enter last name'
+  }
+  if (!val.company) {
+    errors.company = 'Enter company name'
+  }
+  return errors
+}
 export const FormikForms = () => {
   const classes = useStyles()
   const formik = useFormik({
-    initialValues, onSubmit: val => console.log(val)
+    initialValues,
+    onSubmit,
+    validate,
   })
+  console.log(formik.errors)
   return (
     <form
       className={classes.root}
@@ -34,6 +51,8 @@ export const FormikForms = () => {
           name='firstName'
           value={formik.firstName}
           onChange={formik.handleChange}
+          error={formik.errors.firstName ? formik.errors.firstName : null}
+          helperText={formik.errors.firstName ? formik.errors.firstName : null}
         />
       </div>
       <div>
@@ -43,6 +62,8 @@ export const FormikForms = () => {
           name='lastName'
           value={formik.lastName}
           onChange={formik.handleChange}
+          error={formik.errors.lastName ? formik.errors.lastName : null}
+          helperText={formik.errors.lastName ? formik.errors.lastName : null}
         />
       </div>
       <div>
@@ -52,6 +73,8 @@ export const FormikForms = () => {
           name='company'
           value={formik.company}
           onChange={formik.handleChange}
+          error={formik.errors.company ? formik.errors.company : null}
+          helperText={formik.errors.company ? formik.errors.company : null}
         />
       </div>
       <Button variant='contained' color='primary' type='submit'>
