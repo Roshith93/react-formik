@@ -1,6 +1,7 @@
 import { makeStyles } from '@material-ui/core/styles'
 import { TextField, Button } from '@material-ui/core'
 import { useFormik } from 'formik'
+import * as Yup from 'yup'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -10,31 +11,37 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }))
+const validationSchema = Yup.object({
+  firstName: Yup.string().required('Enter First name'),
+  lastName: Yup.string().required('Enter Last name'),
+  company: Yup.string().required('Enter Company name'),
+})
 const initialValues = {
   firstName: '',
   lastName: '',
   company: '',
 }
 const onSubmit = (val) => console.log(val)
-const validate = (val) => {
-  let errors = {}
-  if (!val.firstName) {
-    errors.firstName = 'Enter first name'
-  }
-  if (!val.lastName) {
-    errors.lastName = 'Enter last name'
-  }
-  if (!val.company) {
-    errors.company = 'Enter company name'
-  }
-  return errors
-}
+// const validate = (val) => {
+//   let errors = {}
+//   if (!val.firstName) {
+//     errors.firstName = 'Enter first name'
+//   }
+//   if (!val.lastName) {
+//     errors.lastName = 'Enter last name'
+//   }
+//   if (!val.company) {
+//     errors.company = 'Enter company name'
+//   }
+//   return errors
+// }
 export const FormikForms = () => {
   const classes = useStyles()
   const formik = useFormik({
     initialValues,
+    validationSchema,
     onSubmit,
-    validate,
+    // validate,
   })
   console.log(formik.touched)
   return (
