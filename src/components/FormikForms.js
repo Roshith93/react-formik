@@ -36,7 +36,7 @@ export const FormikForms = () => {
     onSubmit,
     validate,
   })
-  console.log(formik.errors)
+  console.log(formik.touched)
   return (
     <form
       className={classes.root}
@@ -47,34 +47,41 @@ export const FormikForms = () => {
       <div>
         <TextField
           label='First Name'
-          defaultValue=''
-          name='firstName'
-          value={formik.firstName}
-          onChange={formik.handleChange}
-          error={formik.errors.firstName ? formik.errors.firstName : null}
-          helperText={formik.errors.firstName ? formik.errors.firstName : null}
+          name="firstName"
+          // value={formik.firstName}
+          // onChange={formik.handleChange}
+          // onBlur={formik.handleBlur}
+          {...formik.getFieldProps('firstName')}
+          error={
+            formik.touched.firstName && formik.errors.firstName ? true : false
+          }
+          helperText={
+            formik.touched.firstName && formik.errors.firstName
+              ? formik.errors.firstName
+              : null
+          }
         />
       </div>
       <div>
         <TextField
           label='Last Name'
-          defaultValue=''
           name='lastName'
           value={formik.lastName}
           onChange={formik.handleChange}
-          error={formik.errors.lastName ? formik.errors.lastName : null}
-          helperText={formik.errors.lastName ? formik.errors.lastName : null}
+          onBlur={formik.handleBlur}
+          error={formik.touched.lastName && formik.errors.lastName? true : false}
+          helperText={formik.errors.lastName && formik.touched.lastName ? formik.errors.lastName : null}
         />
       </div>
       <div>
         <TextField
           label='Company'
-          defaultValue=''
           name='company'
           value={formik.company}
           onChange={formik.handleChange}
-          error={formik.errors.company ? formik.errors.company : null}
-          helperText={formik.errors.company ? formik.errors.company : null}
+          onBlur={formik.handleBlur}
+          error={formik.touched.company && formik.errors.company ? true:false}
+          helperText={formik.errors.company && formik.touched.company  ? formik.errors.company  : null}
         />
       </div>
       <Button variant='contained' color='primary' type='submit'>
