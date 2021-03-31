@@ -27,6 +27,10 @@ const initialValues = {
   lastName: '',
   company: '',
   address: '',
+  social: {
+    facebook: '',
+    twitter: ''
+  }
 }
 const onSubmit = (val) => console.log(val)
 
@@ -98,6 +102,12 @@ export const FormikForms = () => {
           <FormHelperText id='component-error-text' error>
             <ErrorMessage name='company' />
           </FormHelperText>
+        </div>
+        <div>
+          <Field name="social.facebook" as ={TextField} label="facebook"/>
+        </div>
+        <div>
+          <Field name="social.twitter" as ={TextField} label="twitter"/>
         </div>
         <Button variant='contained' color='primary' type='submit'>
           Submit
