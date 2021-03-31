@@ -1,6 +1,11 @@
 import { makeStyles } from '@material-ui/core/styles'
-import { TextField, Button } from '@material-ui/core'
-import { useFormik } from 'formik'
+import {
+  TextField,
+  Button,
+  FormHelperText,
+  FormControl,
+} from '@material-ui/core'
+import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 
 const useStyles = makeStyles((theme) => ({
@@ -15,85 +20,89 @@ const validationSchema = Yup.object({
   firstName: Yup.string().required('Enter First name'),
   lastName: Yup.string().required('Enter Last name'),
   company: Yup.string().required('Enter Company name'),
+  address: Yup.string().required('Enter address'),
 })
 const initialValues = {
   firstName: '',
   lastName: '',
   company: '',
+  address: '',
 }
 const onSubmit = (val) => console.log(val)
-// const validate = (val) => {
-//   let errors = {}
-//   if (!val.firstName) {
-//     errors.firstName = 'Enter first name'
-//   }
-//   if (!val.lastName) {
-//     errors.lastName = 'Enter last name'
-//   }
-//   if (!val.company) {
-//     errors.company = 'Enter company name'
-//   }
-//   return errors
-// }
+
 export const FormikForms = () => {
   const classes = useStyles()
-  const formik = useFormik({
-    initialValues,
-    validationSchema,
-    onSubmit,
-    // validate,
-  })
-  console.log(formik.touched)
+
   return (
-    <form
-      className={classes.root}
-      noValidate
-      autoComplete='off'
-      onSubmit={formik.handleSubmit}
+    <Formik
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+      onSubmit={onSubmit}
+      touched
     >
-      <div>
-        <TextField
-          label='First Name'
-          name="firstName"
-          // value={formik.firstName}
-          // onChange={formik.handleChange}
-          // onBlur={formik.handleBlur}
-          {...formik.getFieldProps('firstName')}
-          error={
-            formik.touched.firstName && formik.errors.firstName ? true : false
-          }
-          helperText={
-            formik.touched.firstName && formik.errors.firstName
-              ? formik.errors.firstName
-              : null
-          }
-        />
-      </div>
-      <div>
-        <TextField
-          label='Last Name'
-          name='lastName'
-          value={formik.lastName}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          error={formik.touched.lastName && formik.errors.lastName? true : false}
-          helperText={formik.errors.lastName && formik.touched.lastName ? formik.errors.lastName : null}
-        />
-      </div>
-      <div>
-        <TextField
-          label='Company'
-          name='company'
-          value={formik.company}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          error={formik.touched.company && formik.errors.company ? true:false}
-          helperText={formik.errors.company && formik.touched.company  ? formik.errors.company  : null}
-        />
-      </div>
-      <Button variant='contained' color='primary' type='submit'>
-        Submit
-      </Button>
-    </form>
+      <Form className={classes.root} noValidate autoComplete='off'>
+        <div>
+          <Field
+            label='First Name'
+            name='firstName'
+            as={TextField}
+            // error={<ErrorMessage name='firstName' />}
+            // helperText={firstName}
+          />
+          <FormHelperText id='component-error-text' error>
+            <ErrorMessage name='firstName' />
+          </FormHelperText>
+        </div>
+        <div>
+          <Field
+            label='Last Name'
+            name='lastName'
+            as={TextField}
+            // error={<ErrorMessage name='lastName' />}
+            // helperText={<ErrorMessage name='lastName' />}
+          />
+          <FormHelperText id='component-error-text' error>
+            <ErrorMessage name='lastName' />
+          </FormHelperText>
+        </div>
+        <div>
+          <Field
+            label='Company'
+            name='company'
+            as={TextField}
+            // error={<ErrorMessage name='company' />}
+            // helperText={<ErrorMessage name='company' />}
+          />
+          <FormHelperText id='component-error-text' error>
+            <ErrorMessage name='company' />
+          </FormHelperText>
+        </div>
+        <div>
+          <Field
+            name='address'
+            // error={<ErrorMessage name='company' />}
+            // helperText={<ErrorMessage name='company' />}
+          >
+            {({ field, form, meta }) => {
+              console.log(meta)
+              return (
+                <TextField
+                  {...field}
+                  label='Address'
+                  error={meta.touched && meta.error ? meta.error : null}
+                  helperText={meta.touched && meta.error ? meta.error : null}
+                />
+              )
+            }}
+          </Field>
+          <FormHelperText id='component-error-text' error>
+            <ErrorMessage name='company' />
+          </FormHelperText>
+        </div>
+        <Button variant='contained' color='primary' type='submit'>
+          Submit
+        </Button>
+      </Form>
+    </Formik>
   )
 }
