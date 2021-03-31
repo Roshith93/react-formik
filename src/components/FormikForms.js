@@ -30,7 +30,8 @@ const initialValues = {
   social: {
     facebook: '',
     twitter: ''
-  }
+  },
+  friends: ["bob", 'marley']
 }
 const onSubmit = (val) => console.log(val)
 
@@ -109,6 +110,16 @@ export const FormikForms = () => {
         <div>
           <Field name="social.twitter" as ={TextField} label="twitter"/>
         </div>
+        {initialValues.friends && initialValues.friends.map(el => {
+          return <div>
+          <Field name={el} as ={TextField} label="fname"/>
+        </div>
+        })}
+        {/* <div>
+          <Field name="friends[0]" as ={TextField} label="fname"/>
+        </div><div>
+          <Field name="friends[1]" as ={TextField} label="fname"/>
+        </div> */}
         <Button variant='contained' color='primary' type='submit'>
           Submit
         </Button>
