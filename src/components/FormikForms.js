@@ -1,13 +1,9 @@
 import { makeStyles } from '@material-ui/core/styles'
-import {
-  TextField,
-  Button,
-  FormHelperText,
-  FormControl,
-} from '@material-ui/core'
-import { Formik, Form, Field, ErrorMessage } from 'formik'
-import * as Yup from 'yup'
+import { TextField, Button, FormHelperText, Grid, Typography } from '@material-ui/core'
 
+import { Formik, Form, Field, ErrorMessage, FieldArray } from 'formik'
+import * as Yup from 'yup'
+const emptyDonation = { institution: '', percentage: 0 };
 const useStyles = makeStyles((theme) => ({
   root: {
     '& .MuiTextField-root': {
@@ -29,11 +25,15 @@ const initialValues = {
   address: '',
   social: {
     facebook: '',
-    twitter: ''
+    twitter: '',
   },
-  friends: ["bob", 'marley']
+  friends: ['bob', 'marley'],
+  donations: [emptyDonation],
 }
-const onSubmit = (val) => console.log(val)
+const onSubmit = async (values) => {
+  console.log('my values', values);
+  return new Promise((res) => setTimeout(res, 2500));
+}
 
 export const FormikForms = () => {
   const classes = useStyles()
@@ -41,10 +41,12 @@ export const FormikForms = () => {
   return (
     <Formik
       initialValues={initialValues}
-      validationSchema={validationSchema}
+      // validationSchema={validationSchema}
       onSubmit={onSubmit}
-      touched
-    >
+      touched>
+      {/* {({values, isSubmitting, errors, isValid}) => ( */}
+
+      
       <Form className={classes.root} noValidate autoComplete='off'>
         <div>
           <Field
@@ -105,25 +107,88 @@ export const FormikForms = () => {
           </FormHelperText>
         </div>
         <div>
-          <Field name="social.facebook" as ={TextField} label="facebook"/>
+          <Field name='social.facebook' as={TextField} label='facebook' />
         </div>
         <div>
-          <Field name="social.twitter" as ={TextField} label="twitter"/>
+          <Field name='social.twitter' as={TextField} label='twitter' />
         </div>
-        {initialValues.friends && initialValues.friends.map(el => {
-          return <div>
-          <Field name={el} as ={TextField} label="fname"/>
-        </div>
-        })}
-        {/* <div>
-          <Field name="friends[0]" as ={TextField} label="fname"/>
-        </div><div>
-          <Field name="friends[1]" as ={TextField} label="fname"/>
-        </div> */}
+       
+        <FieldArray name="donations">
+                  {(arrHelpers) => {
+                    console.log(arrHelpers)
+                    const { push, remove, form,  } = arrHelpers
+                 return (
+                    <>
+                      <Grid item>
+                        <Typography variant="body2">
+                          All your donations
+                        </Typography>
+                      </Grid>
+
+                      {form.values.donations.map((_, index) => (
+                        <Grid
+                          container
+                          item
+                          className={classes.noWrap}
+                          key={index}
+                          spacing={2}
+                        >
+                          <Grid item container spacing={2} xs={12} sm="auto">
+                            <Grid item xs={12} sm={6}>
+                              <Field
+                                fullWidth
+                                name={`donations.${index}.institution`}
+                                as={TextField}
+                                label="Institution"
+                              />
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                              <Field
+                                fullWidth
+                                name={`donations[${index}].percentage`}
+                                as={TextField}
+                                type="number"
+                                label="Percentage (%)"
+                              />
+                            </Grid>
+                          </Grid>
+                          <Grid item xs={12} sm="auto">
+                            <Button
+                              disabled={form.isSubmitting}
+                              onClick={() => remove(index)}
+                            >
+                              Delete
+                            </Button>
+                          </Grid>
+                        </Grid>
+                      ))}
+
+                      {/* <Grid item>
+                        {typeof errors.donations === 'string' ? (
+                          <Typography color="error">
+                            {errors.donations}
+                          </Typography>
+                        ) : null}
+                      </Grid> */}
+
+                      <Grid item>
+                        <Button
+                          disabled={form.isSubmitting}
+                          variant="contained"
+                          onClick={() => push(emptyDonation)}
+                        >
+                          Add Donation
+                        </Button>
+                      </Grid>
+                    </>
+                  )}}
+                </FieldArray>
         <Button variant='contained' color='primary' type='submit'>
           Submit
         </Button>
+        {/* <pre>{JSON.stringify({ values, errors }, null, 4)}</pre> */}
       </Form>
+      {/* )} */}
     </Formik>
   )
 }
