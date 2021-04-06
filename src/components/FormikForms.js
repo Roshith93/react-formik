@@ -1,3 +1,4 @@
+import {useState} from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import { TextField, Button, FormHelperText, Grid, Typography } from '@material-ui/core'
 
@@ -30,6 +31,18 @@ const initialValues = {
   friends: ['bob', 'marley'],
   donations: [emptyDonation],
 }
+const savedFormValues = {
+  firstName: 'ss',
+  lastName: 'gg',
+  company: 'df',
+  address: 'dg',
+  social: {
+    facebook: 'dfg',
+    twitter: 'df',
+  },
+  friends: ['bob', 'marley'],
+  donations: [emptyDonation],
+}
 const onSubmit = async (values) => {
   console.log('my values', values);
   return new Promise((res) => setTimeout(res, 2500));
@@ -37,12 +50,13 @@ const onSubmit = async (values) => {
 
 export const FormikForms = () => {
   const classes = useStyles()
-
+  const [formValues, setFormValues] = useState(null)
   return (
     <Formik
-      initialValues={initialValues}
+      initialValues={formValues || initialValues}
       // validationSchema={validationSchema}
       onSubmit={onSubmit}
+      enableReinitialize
       touched>
       {/* {({values, isSubmitting, errors, isValid}) => ( */}
 
@@ -185,6 +199,9 @@ export const FormikForms = () => {
                 </FieldArray>
         <Button variant='contained' color='primary' type='submit'>
           Submit
+        </Button>
+        <Button variant='contained' color='primary' type='button' onClick= {() => setFormValues(savedFormValues)}>
+          load saved
         </Button>
         {/* <pre>{JSON.stringify({ values, errors }, null, 4)}</pre> */}
       </Form>
