@@ -4,7 +4,11 @@ import * as Yup from 'yup'
 import FormikControls from './FormikControls'
 
 function FormikContainer() {
-  const initialValues = {}
+  const initialValues = {
+    firstName: '',
+    password: '',
+    textarea: '',
+  }
   const validationSchema = Yup.object({
     firstName: Yup.string().required('Enter the name'),
     password: Yup.string().required('Enter the password'),
@@ -27,7 +31,7 @@ function FormikContainer() {
               label='First Name'
               name='firstName'
             />
-             <FormikControls
+            <FormikControls
               controls='input'
               type='password'
               label='Password'
