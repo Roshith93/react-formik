@@ -3,6 +3,10 @@ import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
 import FormikControls from './FormikControls'
 
+const cars = [
+  { name: 'volvo', label: 'Volvo' },
+  { name: 'bmw', label: 'BMW' },
+]
 function FormikContainer() {
   const initialValues = {
     firstName: '',
@@ -13,6 +17,8 @@ function FormikContainer() {
     firstName: Yup.string().required('Enter the name'),
     password: Yup.string().required('Enter the password'),
     textarea: Yup.string().required('Enter the textarea'),
+    car: Yup.string().required('Select the country'),
+
   })
   const onSubmit = (values, actions) => console.log(values)
 
@@ -41,6 +47,12 @@ function FormikContainer() {
               controls='textarea'
               label='Enter Address'
               name='textarea'
+            />
+            <FormikControls
+              controls='select'
+              label='Choose a car'
+              name='car'
+              options={cars}
             />
             <button type='submit'>Submit</button>
           </Form>
