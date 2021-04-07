@@ -6,8 +6,8 @@ export const Select = ({ name, label, options, ...rest }) => {
     <div className='form-control'>
       <label htmlFor={name}>{label}</label>
       <Field name={name} label={label} {...rest} as='select'>
-        {options.map(({ name, label }) => (
-          <option value={name} key={name}>
+        {options.map(({ value, label }) => (
+          <option value={value} key={value}>
             {label}
           </option>
         ))}

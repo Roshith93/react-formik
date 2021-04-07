@@ -4,20 +4,28 @@ import * as Yup from 'yup'
 import FormikControls from './FormikControls'
 
 const cars = [
-  { name: 'volvo', label: 'Volvo' },
-  { name: 'bmw', label: 'BMW' },
+  { label: 'volvo', value: 'Volvo' },
+  { label: 'bmw', value: 'BMW' },
+]
+const genders = [
+  {label:'male',value:'male'},
+  {label:'female',value:'female'},
+  {label:'other',value:'other'},
 ]
 function FormikContainer() {
   const initialValues = {
     firstName: '',
     password: '',
     textarea: '',
+    car: '',
+    gender: ''
   }
   const validationSchema = Yup.object({
     firstName: Yup.string().required('Enter the name'),
     password: Yup.string().required('Enter the password'),
     textarea: Yup.string().required('Enter the textarea'),
     car: Yup.string().required('Select the country'),
+    gender: Yup.string().required('Please select the gender'),
 
   })
   const onSubmit = (values, actions) => console.log(values)
@@ -53,6 +61,13 @@ function FormikContainer() {
               label='Choose a car'
               name='car'
               options={cars}
+            />
+            <FormikControls
+              controls='radio'
+              type="radio"
+              label='Please select your gender:'
+              name='gender'
+              options={genders}
             />
             <button type='submit'>Submit</button>
           </Form>
