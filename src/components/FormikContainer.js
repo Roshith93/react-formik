@@ -12,13 +12,19 @@ const genders = [
   {label:'female',value:'female'},
   {label:'other',value:'other'},
 ]
+const locationData = [
+  {label:'BLR',value:'BLR'},
+  {label:'KL',value:'KL'},
+  {label:'KA',value:'KA'},
+]
 function FormikContainer() {
   const initialValues = {
     firstName: '',
     password: '',
     textarea: '',
     car: '',
-    gender: ''
+    gender: '',
+    locations: [],
   }
   const validationSchema = Yup.object({
     firstName: Yup.string().required('Enter the name'),
@@ -26,6 +32,7 @@ function FormikContainer() {
     textarea: Yup.string().required('Enter the textarea'),
     car: Yup.string().required('Select the country'),
     gender: Yup.string().required('Please select the gender'),
+    locations: Yup.array().required('Please select the location'),
 
   })
   const onSubmit = (values, actions) => console.log(values)
@@ -68,6 +75,13 @@ function FormikContainer() {
               label='Please select your gender:'
               name='gender'
               options={genders}
+            />
+            <FormikControls
+              controls='checkbox'
+              type="checkbox"
+              label='Please select your vehicles:'
+              name='locations'
+              options={locationData}
             />
             <button type='submit'>Submit</button>
           </Form>
