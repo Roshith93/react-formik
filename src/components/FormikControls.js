@@ -3,6 +3,7 @@ import { Textarea } from './Textarea'
 import { Select } from './Select'
 import { Radio } from './Radio'
 import { Checkbox } from './Checkbox'
+import { DatePicker } from './DatePicker'
 
 function FormikControls({ controls, ...rest }) {
   switch (controls) {
@@ -17,6 +18,7 @@ function FormikControls({ controls, ...rest }) {
     case 'checkbox':
       return <Checkbox {...rest} />
     case 'date':
+      return <DatePicker {...rest}/>
     default:
       return null
   }

@@ -25,6 +25,7 @@ function FormikContainer() {
     car: '',
     gender: '',
     locations: [],
+    date: ''
   }
   const validationSchema = Yup.object({
     firstName: Yup.string().required('Enter the name'),
@@ -33,6 +34,7 @@ function FormikContainer() {
     car: Yup.string().required('Select the country'),
     gender: Yup.string().required('Please select the gender'),
     locations: Yup.array().required('Please select the location'),
+    date: Yup.string().required('Please select the gender'),
 
   })
   const onSubmit = (values, actions) => console.log(values)
@@ -82,6 +84,12 @@ function FormikContainer() {
               label='Please select your vehicles:'
               name='locations'
               options={locationData}
+            />
+            <FormikControls
+              controls='date'
+              type="date"
+              label='Please select date:'
+              name='date'
             />
             <button type='submit'>Submit</button>
           </Form>
