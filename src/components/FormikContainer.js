@@ -34,7 +34,7 @@ function FormikContainer() {
     car: Yup.string().required('Select the country'),
     gender: Yup.string().required('Please select the gender'),
     locations: Yup.array().required('Please select the location'),
-    date: Yup.string().required('Please select the gender'),
+    date: Yup.date().required('Please select the gender').nullable(),
 
   })
   const onSubmit = (values, actions) => console.log(values)

@@ -4,6 +4,7 @@ import { Select } from './Select'
 import { Radio } from './Radio'
 import { Checkbox } from './Checkbox'
 import { DatePicker } from './DatePicker'
+import { ReactDatePicker } from './ReactDatePicker'
 
 function FormikControls({ controls, ...rest }) {
   switch (controls) {
@@ -18,7 +19,7 @@ function FormikControls({ controls, ...rest }) {
     case 'checkbox':
       return <Checkbox {...rest} />
     case 'date':
-      return <DatePicker {...rest}/>
+      return <ReactDatePicker {...rest}/>
     default:
       return null
   }
